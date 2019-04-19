@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+/var/log/xtendcashd/* {
+    {{ xtendcashd_logrotate_period }}
+    rotate {{ xtendcashd_logrotate_keep }}
+    compress
+    missingok
+    notifempty
+    sharedscripts
+    copytruncate
+}

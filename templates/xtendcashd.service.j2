@@ -1,0 +1,36 @@
+[Unit]
+Description=XtendCash Full Node
+After=network.target
+
+[Service]
+User=xtendcash
+Group=xtendcash
+WorkingDirectory=~
+RuntimeDirectory=/run/xtendcashd
+
+# Clearnet config
+#
+Type=forking
+PIDFile=/run/xtendcashd/xtendcashd.pid
+ExecStart={{ xtendcash_install_dir }}/bin/xtendcashd --config-file /etc/xtendcashd.conf  \
+    --detach --pidfile /run/xtendcashd/xtendcashd.pid
+
+# Tor config
+#
+## We have to use simple, not forking, because we cannot pass --detach
+## because stderr/stdout is not available when detached, but torsocks
+## attempts to write to it, and fails with 'invalid argument', causing
+## xtendcashd to fail.
+#Type=simple
+#Environment=DNS_PUBLIC=tcp
+## The following is needed only when accessing wallet from a different
+## host in the LAN, VPN, etc, the RPC must bind to 0.0.0.0, but
+## by default torsocks only allows binding to localhost.
+#Environment=TORSOCKS_ALLOW_INBOUND=1
+#ExecStart=/usr/bin/torsocks /usr/bin/xtendcashd --config-file /etc/xtendcashd.conf \
+#    --non-interactive
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,52 @@
+---
+xtendcash_min_memory: 2900
+xtendcash_min_compile_memory: 3900
+
+xtendcash_dependencies:
+  - build-essential
+  - cmake
+  - pkg-config
+  - libboost-all-dev
+  - libssl-dev
+  - libzmq3-dev
+  - libunbound-dev
+  - libsodium-dev
+  - libminiupnpc-dev
+  - libunwind8-dev
+  - liblzma-dev
+  - libreadline6-dev
+  - libldns-dev
+  - libexpat1-dev
+  - libgtest-dev
+  - doxygen 
+  - graphviz
+  - libpcsclite-dev
+  - gcc-8
+  - g++-8
+
+xtendcash_user: xtendcash
+xtendcash_group: xtendcash
+
+xtendcash_install_dir: /opt/xtendcash
+xtendcash_source_code: ''
+xtendcash_source_tag: master
+
+xtendcash_install_firewall: false
+
+xtendcash_service_node: 0
+
+xtendcashd_log_level: 0
+xtendcashd_logrotate_period: daily
+xtendcashd_logrotate_keep: 30
+
+xtendcashd_p2p_bind_ip: 0.0.0.0
+xtendcashd_p2p_bind_port: 33123
+xtendcashd_p2p_external_port: 0
+xtendcashd_rpc_bind_ip: 127.0.0.1
+xtendcashd_rpc_bind_port: 33124
+xtendcashd_zmq_bind_ip: 127.0.0.1
+xtendcashd_zmq_bind_port: 33125
+xtendcashd_restricted_rpc: 0
+xtendcashd_exclusive_nodes: []
+xtendcashd_confirm_external_bind: 0
+xtendcashd_hide_my_port: 0

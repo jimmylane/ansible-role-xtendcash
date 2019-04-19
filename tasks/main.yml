@@ -1,0 +1,61 @@
+---
+
+- name: make sure source code var is set
+  assert:
+    that:
+      - '"{{ xtendcash_source_code }}" != ""'
+    fail_msg: "xtendcash_source_code is not set"
+    success_msg: "xtendcash source code is set"
+
+- name: create xtendcash group
+  group:
+    name: "{{ xtendcash_group }}"
+    state: present
+
+# need shell for prepare_registration
+- name: create xtendcash user
+  user:
+    name: "{{ xtendcash_user }}"
+    group: "{{ xtendcash_group }}"
+    system: true
+    shell: /bin/bash
+    state: present
+
+- name: install rsyslog
+  apt:
+    name: rsyslog
+    state: present
+
+- name: make sure rsyslog is enabled and running
+  service:
+    name: rsyslog
+    enabled: yes
+    state: started
+
+- name: install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+
+- name: make sure fail2ban is enabled and running
+  service:
+    name: fail2ban
+    enabled: yes
+    state: started
+
+- name: install ntp
+  apt:
+    name: ntp
+    state: present
+
+- name: make sure ntp is enabled and running
+  service:
+    name: ntp
+    enabled: yes
+    state: started
+
+- name: build source code
+  include_tasks:
+    file: build.yml
+
+#- name: firewall

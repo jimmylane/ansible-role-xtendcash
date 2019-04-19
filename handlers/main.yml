@@ -1,0 +1,10 @@
+---
+# handlers file for ansible-note
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: restart xtendcashd
+  systemd:
+    name: xtendcashd
+    state: restarted

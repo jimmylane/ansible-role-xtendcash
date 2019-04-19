@@ -1,0 +1,34 @@
+# {{ ansible_managed }}
+
+service-node={{ xtendcash_service_node }}
+
+data-dir=/var/lib/xtendcashd
+log-file=/var/log/xtendcashd/xtendcashd.log
+log-level={{ xtendcashd_log_level }}
+
+p2p-bind-ip={{ xtendcashd_p2p_bind_ip }}
+p2p-bind-port={{ xtendcashd_p2p_bind_port }}
+p2p-external-port={{ xtendcashd_p2p_external_port }}
+
+rpc-bind-ip={{ xtendcashd_rpc_bind_ip }}
+rpc-bind-port={{ xtendcashd_rpc_bind_port }}
+
+restricted-rpc={{ xtendcashd_restricted_rpc }}
+
+zmq-rpc-bind-ip={{ xtendcashd_zmq_bind_ip }}
+zmq-rpc-bind-port={{ xtendcashd_zmq_bind_port }}
+
+{% if xtendcashd_priority_nodes is defined and xtendcashd_priority_nodes is sequence %}
+{% for node in xtendcashd_priority_nodes %}
+add-priority-node={{ node }}
+{% endfor %}
+{% endif %}
+
+{% if xtendcashd_exclusive_nodes is defined and xtendcashd_exclusive_nodes is sequence %}
+{% for node in xtendcashd_exclusive_nodes %}
+add-exclusive-node={{ node }}
+{% endfor %}
+{% endif %}
+
+confirm-external-bind={{ xtendcashd_confirm_external_bind }}
+hide-my-port={{ xtendcashd_hide_my_port }}
