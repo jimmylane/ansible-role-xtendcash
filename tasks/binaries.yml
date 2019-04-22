@@ -12,5 +12,7 @@
     remote_src: yes
     owner: "{{ xtendcash_user }}"
     group: "{{ xtendcash_group }}"
+    extra_opts:
+    - "--strip=1"
 
 
