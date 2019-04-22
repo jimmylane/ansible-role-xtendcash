@@ -1,0 +1,37 @@
+---
+- name: create installation directory
+  file:
+    path: "{{ xtendcash_install_dir }}"
+    owner: root
+    group: root
+    mode: 0775
+    state: directory
+
+- name: create source dir
+  file:
+    path: "{{ xtendcash_install_dir }}/src"
+    owner: root
+    group: root
+    mode: 0775
+    state: directory
+
+- name: create xtendcash data dirs
+  file:
+    path: "{{ item }}"
+    owner: "{{ xtendcash_user }}"
+    group: "{{ xtendcash_group }}"
+    mode: 0750
+    state: directory
+  with_items:
+    - /var/lib/xtendcashd
+    - /var/log/xtendcashd
+    - /run/xtendcashd
+
+- name: persist /run/xtendcashd
+  template:
+    src: tmpfiles.d.j2
+    dest: /etc/tmpfiles.d/xtendcashd.conf
+    owner: root
+    group: root
+    mode: 0644
+    

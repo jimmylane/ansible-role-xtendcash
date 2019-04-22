@@ -28,6 +28,8 @@ xtendcash_user: xtendcash
 xtendcash_group: xtendcash
 
 xtendcash_install_dir: /opt/xtendcash
+xtendcash_binary_url: ''
+xtendcash_build_source: false
 xtendcash_source_code: ''
 xtendcash_source_tag: master
 

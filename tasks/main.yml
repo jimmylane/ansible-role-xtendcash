@@ -1,11 +1,20 @@
 ---
 
-- name: make sure source code var is set
+- name: make sure source code var is set when building
   assert:
     that:
       - '"{{ xtendcash_source_code }}" != ""'
     fail_msg: "xtendcash_source_code is not set"
     success_msg: "xtendcash source code is set"
+  when: xtendcash_build_source
+
+- name: make sure binary download URL is set
+  assert:
+    that:
+      - '"{{ xtendcash_binary_url }}" != ""'
+    fail_msg: "xtendcash_binary_url is not set"
+    success_msg: "xtendcash binary URL is not set"
+  when: not xtendcash_build_source
 
 - name: create xtendcash group
   group:
@@ -54,8 +63,22 @@
     enabled: yes
     state: started
 
+- name: setup directories
+  include_tasks:
+    file: setup.yml
+
+- name: install binaries
+  include_tasks:
+    file: binaries.yml
+  when: not xtendcash_build_source
+
 - name: build source code
   include_tasks:
     file: build.yml
+  when: xtendcash_build_source
+
+- name: configure system for xtendcashd
+  include_tasks:
+    file: config.yml
 
 #- name: firewall

@@ -1,0 +1,10 @@
+---
+- name: Unarchive a file that needs to be downloaded (added in 2.0)
+  unarchive:
+    src: "{{ xtendcash_binary_url }}/{{ xtendcash_source_tag }}/xtendcash-linux64.tar.bz2"
+    dest: "{{ xtendcash_install_dir }}/src/binaries/{{ xtendcash_source_tag }}/bin"
+    remote_src: yes
+    owner: "{{ xtendcash_user }}"
+    group: "{{ xtendcash_group }}"
+    
+

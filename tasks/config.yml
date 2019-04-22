@@ -1,0 +1,48 @@
+---
+- name: install xtendcashd service
+  template:
+    src:  xtendcashd.service.j2
+    dest: /etc/systemd/system/xtendcashd.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart xtendcashd
+
+- name: symlink binary directory
+  file:
+    src: "{{ xtendcash_install_dir }}/src/{{ xtendcash_source_tag }}/build/release/bin"
+    path: "{{ xtendcash_install_dir }}/bin"
+    state: link
+  notify: restart xtendcashd
+
+- name: install xtendcashd configuration
+  template:
+    src: xtendcashd.conf.j2
+    dest: "/etc/xtendcashd.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart xtendcashd
+
+- name: ensure xtendcashd is enabled
+  service:
+    name: xtendcashd
+    enabled: yes
+
+- name: add xtendcash bin dir to PATH
+  template:
+    src: xtendcash.path.j2
+    dest: /etc/profile.d/xtendcash-bin-path.sh
+    owner: root
+    group: root
+    mode: 0664
+
+- name: configure logrotate for xtendcash
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/xtendcash
+    owner: root
+    group: root
+    mode: 0644
