@@ -10,11 +10,20 @@
     - reload systemd
     - restart xtendcashd
 
-- name: symlink binary directory
+- name: symlink source bin directory
   file:
     src: "{{ xtendcash_install_dir }}/src/{{ xtendcash_source_tag }}/build/release/bin"
     path: "{{ xtendcash_install_dir }}/bin"
     state: link
+  when: xtendcash_build_source
+  notify: restart xtendcashd
+
+- name: symlink binary bin directory
+  file:
+    src: "{{ xtendcash_install_dir }}/src/binaries/{{ xtendcash_source_tag }}/bin"
+    path: "{{ xtendcash_install_dir }}/bin"
+    state: link
+  when: not xtendcash_build_source
   notify: restart xtendcashd
 
 - name: install xtendcashd configuration
