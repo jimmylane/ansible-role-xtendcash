@@ -7,9 +7,9 @@
     mode: 0775
     state: directory
 
-- name: create source dir
+- name: create source and binary dir
   file:
-    path: "{{ xtendcash_install_dir }}/src"
+    path: "{{ xtendcash_install_dir }}/src/binaries"
     owner: root
     group: root
     mode: 0775
